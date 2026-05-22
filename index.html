@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0a1628"/>
+<meta name="description" content="Borewell Farm Water Services — Business Management"/>
+<title>Borewell Farm Water — પાણી સેવા</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<style>
+:root{--bg:#0a1628;--bg2:#111e35;--bg3:#162440;--surface:#1c2e4a;--surface2:#243555;--border:rgba(99,160,255,0.12);--border2:rgba(99,160,255,0.22);--accent:#3b82f6;--accent2:#60a5fa;--accent-glow:rgba(59,130,246,0.18);--green:#10b981;--green2:#34d399;--red:#ef4444;--red2:#f87171;--warn:#f59e0b;--warn2:#fbbf24;--text:#e8f0fe;--text2:#94a3b8;--text3:#64748b;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;--r:10px;--r2:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(16,185,129,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.shell{display:flex;min-height:100vh;position:relative;z-index:1}
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform 0.3s}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.logo-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
+.logo-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.nav{flex:1;padding:16px 10px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s;margin-bottom:2px;border:1px solid transparent;user-select:none}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:rgba(59,130,246,0.15);color:var(--accent2);border-color:var(--border2)}
+.nav-item i{font-size:17px;flex-shrink:0}
+.nav-label-en{font-size:13px}
+.nav-label-gu{font-size:11px;color:var(--text3);margin-top:1px}
+.sync-pill{margin:0 10px 16px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:20px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green2)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green2);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.main{flex:1;margin-left:240px;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:60px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50}
+.page-title{font-size:16px;font-weight:600;color:var(--text)}
+.page-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.topbar-date{font-size:12px;color:var(--text2);font-family:var(--mono)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);cursor:pointer;font-size:22px;padding:4px}
+.content{flex:1;padding:24px}
+.page{display:none}
+.page.active{display:block;animation:fadeUp 0.25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px;position:relative;overflow:hidden}
+.metric-card::after{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;background:var(--mc-glow,rgba(59,130,246,0.1));pointer-events:none}
+.metric-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.metric-gu{font-size:10px;color:var(--text3);margin-top:2px}
+.metric-val{font-size:26px;font-weight:600;font-family:var(--mono);color:var(--text);line-height:1}
+.badge{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;white-space:nowrap;font-family:var(--mono);display:inline-block;margin-top:8px}
+.badge-ok{background:rgba(16,185,129,0.12);color:var(--green2);border:1px solid rgba(16,185,129,0.2)}
+.badge-warn{background:rgba(245,158,11,0.12);color:var(--warn2);border:1px solid rgba(245,158,11,0.2)}
+.badge-info{background:rgba(59,130,246,0.12);color:var(--accent2);border:1px solid var(--border2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:20px}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.card-title{font-size:14px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:8px}
+.card-title i{font-size:16px;color:var(--accent2)}
+.card-sub{font-size:11px;color:var(--text2);margin-top:3px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 12px;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:0.6px;border-bottom:1px solid var(--border);font-weight:500;white-space:nowrap;background:var(--bg3)}
+tbody td{padding:12px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(59,130,246,0.04)}
+tfoot td{padding:12px 12px;font-weight:600;font-family:var(--mono);border-top:1px solid var(--border2);color:var(--text)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-row{margin-bottom:14px}
+.form-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block}
+.form-label span{font-size:10px;color:var(--text3);margin-left:6px}
+.form-row input,.form-row select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 12px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color 0.15s}
+.form-row input:focus,.form-row select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.15)}
+.form-row select option{background:var(--bg2)}
+.btn{padding:10px 18px;border-radius:var(--r);border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:var(--font);transition:all 0.15s;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#2563eb;transform:translateY(-1px)}
+.btn-success{background:rgba(16,185,129,0.15);color:var(--green2);border:1px solid rgba(16,185,129,0.25)}
+.btn-success:hover{background:rgba(16,185,129,0.25)}
+.btn-ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--border2)}
+.btn-block{width:100%;justify-content:center}
+.preview-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;font-size:12px;color:var(--text2);margin-bottom:14px;min-height:44px;font-family:var(--mono);line-height:1.6}
+.row-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.row-item:last-child{border-bottom:none}
+.row-name{font-size:14px;font-weight:500;color:var(--text)}
+.row-sub{font-size:11px;color:var(--text2);margin-top:3px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,var(--accent));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+.bar-wrap{height:6px;background:var(--bg3);border-radius:20px;overflow:hidden;margin-top:5px}
+.bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.6s ease}
+.ledger-sum{background:var(--bg3);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:12px;margin-top:16px}
+.ls-item{text-align:center}
+.ls-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.ls-val{font-size:16px;font-weight:600;font-family:var(--mono)}
+.receipt-paper{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px}
+.r-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.r-row:last-child{border-bottom:none}
+.r-total{font-weight:600;font-size:15px;font-family:var(--mono)}
+.receipt-divider{border:none;border-top:1px dashed var(--border2);margin:14px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.three-col{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.empty{padding:32px;text-align:center;color:var(--text3);font-size:13px}
+.empty i{font-size:32px;display:block;margin-bottom:8px;color:var(--text3)}
+#toast{position:fixed;bottom:28px;right:24px;background:var(--green);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999;display:flex;align-items:center;gap:8px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-toggle{display:flex}
+  .two-col,.three-col{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .metric-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){.metric-grid{grid-template-columns:1fr}.content{padding:14px}}
+@media print{.sidebar,.topbar,.menu-toggle,.btn,.sync-pill{display:none!important}.main{margin-left:0}body{background:#fff;color:#000}.receipt-paper,.card{border:1px solid #ccc;background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class="ti ti-droplet-filled" style="color:#fff;font-size:22px"></i></div>
+    <div class="logo-title">Borewell Farm Water</div>
+    <div class="logo-sub">ભૂગર્ભ જળ ખેતર સેવા</div>
+  </div>
+  <nav class="nav">
+    <div class="nav-item active" data-page="dashboard" onclick="showPage('dashboard',this)"><i class="ti ti-layout-dashboard"></i><div><div class="nav-label-en">Dashboard</div><div class="nav-label-gu">ડેશબોર્ડ</div></div></div>
+    <div class="nav-item" data-page="sessions" onclick="showPage('sessions',this)"><i class="ti ti-clock-play"></i><div><div class="nav-label-en">Sessions</div><div class="nav-label-gu">સત્ર નોંધ</div></div></div>
+    <div class="nav-item" data-page="farmers" onclick="showPage('farmers',this)"><i class="ti ti-users"></i><div><div class="nav-label-en">Farmers</div><div class="nav-label-gu">ખેડૂત</div></div></div>
+    <div class="nav-item" data-page="ledger" onclick="showPage('ledger',this)"><i class="ti ti-book-2"></i><div><div class="nav-label-en">Ledger</div><div class="nav-label-gu">ખાતાવહી</div></div></div>
+    <div class="nav-item" data-page="receipt" onclick="showPage('receipt',this)"><i class="ti ti-receipt"></i><div><div class="nav-label-en">Receipt</div><div class="nav-label-gu">રસીદ</div></div></div>
+  </nav>
+  <div class="sync-pill"><div class="sync-dot"></div>All data synced • સિંક</div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="menu-toggle" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
+      <div><div class="page-title" id="page-title">Dashboard</div><div class="page-sub" id="page-sub">Overview — એકંદર</div></div>
+    </div>
+    <span class="topbar-date" id="today-date"></span>
+  </header>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="page active">
+      <div class="metric-grid" id="metrics"></div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-alert-triangle"></i>Pending dues — ઉધાર</div></div>
+          <div id="due-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-chart-bar"></i>Collection — ઉઘરાણી</div></div>
+          <div id="bar-chart"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><i class="ti ti-list-details"></i>Recent sessions — તાજેતરની નોંધ</div></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Farmer</th><th>Time</th><th>Hours</th><th>Bill</th><th>Status</th></tr></thead><tbody id="recent-tbody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- SESSIONS -->
+    <div id="sessions" class="page">
+      <div class="two-col" style="align-items:start">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-plus"></i>Add session — નવી નોંધ</div></div>
+          <div class="form-row"><label class="form-label">Date — તારીખ</label><input type="date" id="s-date"/></div>
+          <div class="form-row"><label class="form-label">Farmer name — ખેડૂત <span>type or pick existing</span></label><input type="text" id="s-name" placeholder="e.g. Ramesh Lal" list="farmer-dl" autocomplete="off"/><datalist id="farmer-dl"></datalist></div>
+          <div class="form-grid">
+            <div class="form-row"><label class="form-label">Start — ચાલુ</label><input type="time" id="s-start" oninput="previewSession()" onchange="previewSession()"/></div>
+            <div class="form-row"><label class="form-label">End — બંધ</label><input type="time" id="s-end" oninput="previewSession()" onchange="previewSession()"/></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row"><label class="form-label">Rate ₹/hr — દર</label><input type="number" id="s-rate" value="150" min="1" oninput="previewSession()"/></div>
+            <div class="form-row"><label class="form-label">Paid now ₹ — જમા</label><input type="number" id="s-paid" value="0" min="0" oninput="previewSession()"/></div>
+          </div>
+          <div class="preview-box" id="session-preview">Fill in start &amp; end time to see bill preview</div>
+          <button class="btn btn-primary btn-block" onclick="addSession()"><i class="ti ti-device-floppy"></i>Save session — સાચવો</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-list"></i>All sessions — બધી નોંધ</div></div>
+          <div id="session-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FARMERS -->
+    <div id="farmers" class="page">
+      <div class="two-col" style="align-items:start">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-users"></i>Farmer register — ખેડૂત</div></div>
+          <div id="farmer-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-cash"></i>Record payment — ચૂકવણી</div></div>
+          <div class="form-row"><label class="form-label">Farmer — ખેડૂત</label><select id="p-farmer" onchange="updatePayBalance()"><option value="">Select farmer</option></select></div>
+          <div id="p-balance-info" style="font-size:12px;color:var(--text2);margin-bottom:12px;min-height:18px;font-family:var(--mono)"></div>
+          <div class="form-row"><label class="form-label">Amount received ₹ — જમા</label><input type="number" id="p-amount" min="1" placeholder="0" oninput="updatePayBalance()"/></div>
+          <button class="btn btn-success btn-block" onclick="recordPayment()"><i class="ti ti-check"></i>Record payment — નોંધ કરો</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEDGER -->
+    <div id="ledger" class="page">
+      <div class="card">
+        <div class="card-header"><div><div class="card-title"><i class="ti ti-book-2"></i>Farmer ledger — ખાતાવહી</div><div class="card-sub">Full account history per farmer</div></div></div>
+        <div class="form-row" style="max-width:320px"><label class="form-label">Select farmer — ખેડૂત પસંદ કરો</label><select id="ledger-farmer" onchange="renderLedger(this.value)"><option value="">— Choose farmer —</option></select></div>
+        <div id="ledger-content"><div class="empty"><i class="ti ti-book-2"></i>Select a farmer to view their complete ledger</div></div>
+      </div>
+    </div>
+
+    <!-- RECEIPT -->
+    <div id="receipt" class="page">
+      <div class="three-col" style="align-items:start">
+        <div>
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="ti ti-settings"></i>Receipt settings — સેટિંગ</div></div>
+            <div class="form-row"><label class="form-label">Farmer — ખેડૂત</label><select id="r-farmer"><option value="">Select farmer</option></select></div>
+            <div class="form-row"><label class="form-label">Business name</label><input type="text" id="r-biz" value="Borewell Farm Water Services"/></div>
+            <button class="btn btn-primary btn-block" onclick="generateReceipt()" style="margin-bottom:10px"><i class="ti ti-eye"></i>Preview receipt — જુઓ</button>
+            <button class="btn btn-ghost btn-block" id="print-btn" onclick="printReceipt()" style="display:none"><i class="ti ti-printer"></i>Print / Save PDF — છાપો</button>
+          </div>
+        </div>
+        <div><div id="receipt-output"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<div id="toast"><i class="ti ti-check" style="font-size:16px"></i><span id="toast-msg"></span></div>
+<script>
+var db={sessions:[
+  {id:1,date:'2025-04-01',farmer:'B.H.C',start:'07:00',end:'11:00',rate:150,hrs:4,bill:600,paid:660,balance:-60},
+  {id:2,date:'2025-04-02',farmer:'Harjibhai',start:'06:30',end:'09:30',rate:150,hrs:3,bill:450,paid:360,balance:90},
+  {id:3,date:'2025-04-03',farmer:'Govind Thakor',start:'08:00',end:'14:00',rate:150,hrs:6,bill:900,paid:600,balance:300},
+  {id:4,date:'2025-04-04',farmer:'Ashokbhai',start:'07:00',end:'12:00',rate:150,hrs:5,bill:750,paid:750,balance:0},
+  {id:5,date:'2025-04-05',farmer:'Ramesh Lal',start:'06:00',end:'10:00',rate:150,hrs:4,bill:600,paid:480,balance:120},
+  {id:6,date:'2025-04-06',farmer:'Billu',start:'10:00',end:'13:00',rate:150,hrs:3,bill:450,paid:280,balance:170}
+],nextId:7};
+function saveDB(){try{localStorage.setItem('borewell_db',JSON.stringify(db));}catch(e){}}
+function loadDB(){try{var s=localStorage.getItem('borewell_db');if(s){db=JSON.parse(s);}}catch(e){}}
+loadDB();
+if(!db || !Array.isArray(db.sessions)) db = {sessions: [], nextId: 1};
+if(!Number.isFinite(db.nextId)) db.nextId = (db.sessions?.length || 0) + 1;
+function getFarmers(){var map={};db.sessions.forEach(function(s){if(!map[s.farmer])map[s.farmer]={name:s.farmer,hrs:0,bill:0,paid:0,balance:0,sessions:0};map[s.farmer].hrs+=s.hrs;map[s.farmer].bill+=s.bill;map[s.farmer].paid+=s.paid;map[s.farmer].balance+=s.balance;map[s.farmer].sessions++;});return Object.values(map);}
+function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
+function fmtH(n){return (Math.round(n*10)/10)+' hr';}
+var pageNames={dashboard:['Dashboard','Overview — એકંદર'],sessions:['Sessions','Add & view — નોંધ'],farmers:['Farmers','Register & payments — ખેડૂત'],ledger:['Ledger','Account history — ખાતાવહી'],receipt:['Receipt','Generate & print — રસીદ']};
+function showPage(id,el){
+  var target=document.getElementById(id);
+  if(!target){return;}
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  target.classList.add('active');
+  if(el && el.classList)el.classList.add('active');
+  var nm=pageNames[id]||[id,''];
+  document.getElementById('page-title').textContent=nm[0];
+  document.getElementById('page-sub').textContent=nm[1];
+  closeSidebar();
+  if(id==='dashboard')renderDashboard();
+  if(id==='sessions')renderSessions();
+  if(id==='farmers')renderFarmers();
+  if(id==='ledger')initLedger();
+  if(id==='receipt')initReceipt();
+}
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+document.getElementById('today-date').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+function renderDashboard(){
+  var f=getFarmers();
+  var tBill=f.reduce(function(a,c){return a+c.bill;},0);
+  var tPaid=f.reduce(function(a,c){return a+c.paid;},0);
+  var tDue=f.filter(function(x){return x.balance>0;}).reduce(function(a,c){return a+c.balance;},0);
+  var tHrs=f.reduce(function(a,c){return a+c.hrs;},0);
+  var pct=tBill>0?Math.round(tPaid/tBill*100):0;
+  document.getElementById('metrics').innerHTML=
+    '<div class="metric-card" style="--mc-glow:rgba(59,130,246,0.12)"><div class="metric-label">Total billed<div class="metric-gu">કુલ બિલ</div></div><div class="metric-val">'+fmt(tBill)+'</div><span class="badge badge-info">'+db.sessions.length+' sessions</span></div>'+
+    '<div class="metric-card" style="--mc-glow:rgba(16,185,129,0.12)"><div class="metric-label">Collected<div class="metric-gu">જમા</div></div><div class="metric-val" style="color:var(--green2)">'+fmt(tPaid)+'</div><span class="badge badge-ok">'+pct+'% done</span></div>'+
+    '<div class="metric-card" style="--mc-glow:rgba(245,158,11,0.12)"><div class="metric-label">Pending dues<div class="metric-gu">ઉધાર</div></div><div class="metric-val" style="color:var(--warn2)">'+fmt(tDue)+'</div><span class="badge badge-warn">'+f.filter(function(x){return x.balance>0;}).length+' farmers</span></div>'+
+    '<div class="metric-card"><div class="metric-label">Total hours<div class="metric-gu">કુલ કલાક</div></div><div class="metric-val">'+Math.round(tHrs)+'</div><span class="badge badge-info">hrs pumped</span></div>';
+  var dues=f.filter(function(x){return x.balance>0;}).sort(function(a,b){return b.balance-a.balance;});
+  document.getElementById('due-list').innerHTML=dues.length?dues.map(function(d){return '<div class="row-item"><div><div class="row-name">'+d.name+'</div><div class="row-sub">'+d.sessions+' session(s) · '+fmtH(d.hrs)+'</div></div><span class="badge badge-warn">'+fmt(d.balance)+'</span></div>';}).join(''):'<div class="empty" style="color:var(--green2)"><i class="ti ti-circle-check" style="color:var(--green2)"></i>All cleared!</div>';
+  var maxB=Math.max.apply(null,f.map(function(x){return x.bill;}));
+  document.getElementById('bar-chart').innerHTML=f.map(function(d){return '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>'+d.name+'</span><span style="color:var(--text2);font-family:var(--mono)">'+fmt(d.bill)+'</span></div><div class="bar-wrap"><div class="bar-fill" style="width:'+Math.round(d.bill/maxB*100)+'%"></div></div></div>';}).join('');
+  var recent=db.sessions.slice().sort(function(a,b){return b.id-a.id;}).slice(0,8);
+  document.getElementById('recent-tbody').innerHTML=recent.map(function(s){return '<tr><td style="font-family:var(--mono);font-size:12px">'+s.date+'</td><td><strong>'+s.farmer+'</strong></td><td style="color:var(--text2);font-size:12px">'+s.start+'–'+s.end+'</td><td style="font-family:var(--mono)">'+fmtH(s.hrs)+'</td><td style="font-family:var(--mono);font-weight:500">'+fmt(s.bill)+'</td><td><span class="badge '+(s.balance<=0?'badge-ok':'badge-warn')+'">'+(s.balance<=0?'Paid':'₹'+Math.round(s.balance)+' due')+'</span></td></tr>';}).join('');
+}
+function renderSessions(){
+  var names=[...new Set(db.sessions.map(function(s){return s.farmer;}))];
+  document.getElementById('farmer-dl').innerHTML=names.map(function(n){return '<option value="'+n+'">';}).join('');
+  if(!document.getElementById('s-date').value)document.getElementById('s-date').value=new Date().toISOString().split('T')[0];
+  var sorted=db.sessions.slice().sort(function(a,b){return b.id-a.id;});
+  document.getElementById('session-list').innerHTML=sorted.length?sorted.map(function(s){return '<div class="row-item"><div><div class="row-name">'+s.farmer+'</div><div class="row-sub">'+s.date+' · '+s.start+'–'+s.end+' · '+fmtH(s.hrs)+'</div></div><div style="text-align:right"><div style="font-size:14px;font-weight:600;font-family:var(--mono)">'+fmt(s.bill)+'</div><span class="badge '+(s.balance<=0?'badge-ok':'badge-warn')+' " style="margin-top:4px">'+(s.balance<=0?'Paid':'₹'+Math.round(s.balance)+' due')+'</span></div></div>';}).join(''):'<div class="empty"><i class="ti ti-clock"></i>No sessions yet</div>';
+}
+function previewSession(){
+  var start=document.getElementById('s-start').value,end=document.getElementById('s-end').value;
+  var rate=parseFloat(document.getElementById('s-rate').value)||150;
+  var paid=parseFloat(document.getElementById('s-paid').value)||0;
+  var name=document.getElementById('s-name').value||'Farmer';
+  if(!start||!end)return;
+  var sm=start.split(':'),em=end.split(':');
+  var hrs=(parseInt(em[0])*60+parseInt(em[1])-parseInt(sm[0])*60-parseInt(sm[1]))/60;
+  if(hrs<=0){document.getElementById('session-preview').textContent='End must be after start';return;}
+  var bill=Math.round(hrs*rate),bal=Math.round(bill-paid);
+  document.getElementById('session-preview').innerHTML=name+' · '+Math.round(hrs*10)/10+' hrs · Bill: '+fmt(bill)+' · Paid: '+fmt(paid)+' · Balance: <span style="color:'+(bal>0?'var(--warn2)':'var(--green2)')+'">'+fmt(bal)+'</span>';
+}
+function addSession(){
+  var date=document.getElementById('s-date').value;
+  var farmer=document.getElementById('s-name').value.trim();
+  var start=document.getElementById('s-start').value,end=document.getElementById('s-end').value;
+  var rate=parseFloat(document.getElementById('s-rate').value)||150;
+  var paid=parseFloat(document.getElementById('s-paid').value)||0;
+  if(!date||!farmer||!start||!end){toast('Please fill all fields');return;}
+  var sm=start.split(':'),em=end.split(':');
+  var hrs=(parseInt(em[0])*60+parseInt(em[1])-parseInt(sm[0])*60-parseInt(sm[1]))/60;
+  if(hrs<=0){toast('End must be after start');return;}
+  var bill=Math.round(hrs*rate),balance=Math.round(bill-paid);
+  db.sessions.push({id:db.nextId++,date:date,farmer:farmer,start:start,end:end,rate:rate,hrs:Math.round(hrs*100)/100,bill:bill,paid:paid,balance:balance});
+  saveDB();toast('Session saved! ✓');
+  document.getElementById('s-name').value='';document.getElementById('s-start').value='';document.getElementById('s-end').value='';document.getElementById('s-paid').value='0';
+  document.getElementById('session-preview').textContent='Fill in start & end time to see bill preview';
+  renderSessions();
+}
+function renderFarmers(){
+  var f=getFarmers();
+  document.getElementById('farmer-list').innerHTML=f.length?f.map(function(d){var init=d.name.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();return '<div class="row-item"><div style="display:flex;align-items:center;gap:12px"><div class="avatar">'+init+'</div><div><div class="row-name">'+d.name+'</div><div class="row-sub">'+d.sessions+' sessions · '+fmtH(d.hrs)+'</div></div></div><div style="text-align:right"><div style="font-size:13px;font-family:var(--mono)">'+fmt(d.bill)+'</div><span class="badge '+(d.balance<=0?'badge-ok':'badge-warn')+'" style="margin-top:4px">'+(d.balance<=0?'Paid':'₹'+Math.round(d.balance)+' due')+'</span></div></div>';}).join(''):'<div class="empty"><i class="ti ti-users"></i>No farmers yet</div>';
+  var pf=document.getElementById('p-farmer'),cur=pf.value;
+  pf.innerHTML='<option value="">Select farmer</option>'+f.map(function(d){return '<option value="'+d.name+'"'+(d.name===cur?' selected':'')+'>'+d.name+'</option>';}).join('');
+  if(cur)updatePayBalance();
+}
+function updatePayBalance(){
+  var name=document.getElementById('p-farmer').value;
+  var amt=parseFloat(document.getElementById('p-amount').value)||0;
+  var info=document.getElementById('p-balance-info');
+  if(!name){info.textContent='';return;}
+  var f=getFarmers().find(function(x){return x.name===name;});
+  if(!f){info.textContent='';return;}
+  var nb=Math.round(f.balance-amt);
+  info.innerHTML='Balance: <span style="color:'+(f.balance>0?'var(--warn2)':'var(--green2)')+'">'+fmt(f.balance)+'</span>'+(amt>0?' → After: <span style="color:'+(nb<=0?'var(--green2)':'var(--warn2)')+'">'+fmt(nb)+'</span>':'');
+}
+function recordPayment(){
+  var name=document.getElementById('p-farmer').value;
+  var amt=parseFloat(document.getElementById('p-amount').value)||0;
+  if(!name||amt<=0){toast('Select farmer and enter amount');return;}
+  var rem=amt;
+  db.sessions.forEach(function(s){if(s.farmer===name&&s.balance>0&&rem>0){var a=Math.min(s.balance,rem);s.paid=Math.round((s.paid+a)*100)/100;s.balance=Math.round((s.balance-a)*100)/100;rem=Math.round((rem-a)*100)/100;}});
+  if(rem>0){var f=db.sessions.find(function(s){return s.farmer===name;});if(f){f.balance=Math.round((f.balance-rem)*100)/100;f.paid=Math.round((f.paid+rem)*100)/100;}}
+  saveDB();toast('Payment recorded! ✓');
+  document.getElementById('p-amount').value='';
+  renderFarmers();renderDashboard();
+}
+function initLedger(){
+  var lf=document.getElementById('ledger-farmer'),prev=lf.value;
+  var names=[...new Set(db.sessions.map(function(s){return s.farmer;}))].sort();
+  lf.innerHTML='<option value="">— Choose farmer —</option>'+names.map(function(n){return '<option value="'+n+'"'+(n===prev?' selected':'')+'>'+n+'</option>';}).join('');
+  if(prev)renderLedger(prev);else document.getElementById('ledger-content').innerHTML='<div class="empty"><i class="ti ti-book-2"></i>Select a farmer to view their complete ledger</div>';
+}
+function renderLedger(name){
+  var lc=document.getElementById('ledger-content');
+  if(!name){lc.innerHTML='<div class="empty"><i class="ti ti-book-2"></i>Select a farmer to view their complete ledger</div>';return;}
+  var sessions=db.sessions.filter(function(s){return s.farmer===name;}).slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+  if(!sessions.length){lc.innerHTML='<div class="empty"><i class="ti ti-clock"></i>No sessions found for this farmer</div>';return;}
+  var tH=0,tB=0,tP=0,tBal=0;
+  sessions.forEach(function(s){tH+=s.hrs;tB+=s.bill;tP+=s.paid;tBal+=s.balance;});
+  tH=Math.round(tH*10)/10;tB=Math.round(tB);tP=Math.round(tP);tBal=Math.round(tBal);
+  lc.innerHTML='<div class="tbl-wrap"><table>'+
+    '<thead><tr><th>Date</th><th>Time</th><th>Hours</th><th>Bill</th><th>Paid</th><th>Balance</th></tr></thead>'+
+    '<tbody>'+sessions.map(function(s){return '<tr><td style="font-family:var(--mono);font-size:12px">'+s.date+'</td><td style="font-size:12px;color:var(--text2)">'+s.start+'–'+s.end+'</td><td style="font-family:var(--mono)">'+Math.round(s.hrs*10)/10+'</td><td style="font-family:var(--mono);font-weight:500">'+fmt(s.bill)+'</td><td style="font-family:var(--mono);color:var(--green2)">'+fmt(s.paid)+'</td><td><span class="badge '+(s.balance>0?'badge-warn':'badge-ok')+'" style="font-family:var(--mono)">'+fmt(s.balance)+'</span></td></tr>';}).join('')+
+    '</tbody><tfoot><tr><td colspan="2">Total — કુલ</td><td style="font-family:var(--mono)">'+tH+'</td><td style="font-family:var(--mono)">'+fmt(tB)+'</td><td style="font-family:var(--mono);color:var(--green2)">'+fmt(tP)+'</td><td style="font-family:var(--mono);color:'+(tBal>0?'var(--warn2)':'var(--green2)')+'">'+fmt(tBal)+'</td></tr></tfoot></table></div>'+
+    '<div class="ledger-sum">'+
+    '<div class="ls-item"><div class="ls-label">Sessions</div><div class="ls-val">'+sessions.length+'</div></div>'+
+    '<div class="ls-item"><div class="ls-label">Hours</div><div class="ls-val">'+tH+'</div></div>'+
+    '<div class="ls-item"><div class="ls-label">Total bill</div><div class="ls-val">'+fmt(tB)+'</div></div>'+
+    '<div class="ls-item"><div class="ls-label">Paid</div><div class="ls-val" style="color:var(--green2)">'+fmt(tP)+'</div></div>'+
+    '<div class="ls-item"><div class="ls-label">Balance</div><div class="ls-val" style="color:'+(tBal>0?'var(--warn2)':'var(--green2)')+'">'+fmt(tBal)+'</div></div>'+
+    '</div>';
+}
+function initReceipt(){
+  var rf=document.getElementById('r-farmer');
+  var names=[...new Set(db.sessions.map(function(s){return s.farmer;}))].sort();
+  rf.innerHTML='<option value="">Select farmer</option>'+names.map(function(n){return '<option value="'+n+'">'+n+'</option>';}).join('');
+  document.getElementById('receipt-output').innerHTML='';
+  document.getElementById('print-btn').style.display='none';
+}
+function generateReceipt(){
+  var name=document.getElementById('r-farmer').value;
+  var biz=document.getElementById('r-biz').value||'Borewell Farm Water Services';
+  if(!name){toast('Select a farmer first');return;}
+  var f=getFarmers().find(function(x){return x.name===name;});
+  var sessions=db.sessions.filter(function(s){return s.farmer===name;}).slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+  var today=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  var rcpt='BW-'+String(db.nextId).padStart(4,'0');
+  document.getElementById('receipt-output').innerHTML='<div class="receipt-paper" id="receipt-print">'+
+    '<div style="text-align:center;margin-bottom:16px"><i class="ti ti-droplet-filled" style="font-size:30px;color:var(--accent2);display:block;margin-bottom:8px"></i>'+
+    '<div style="font-size:16px;font-weight:600">'+biz+'</div>'+
+    '<div style="font-size:12px;color:var(--text2);margin-top:4px">ભૂગર્ભ જળ ખેતર સેવા — Water Usage Receipt</div></div>'+
+    '<hr class="receipt-divider"/>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:14px">'+
+    '<div style="color:var(--text2)">Farmer / ખેડૂત<br><strong style="color:var(--text);font-size:14px">'+name+'</strong></div>'+
+    '<div style="text-align:right;color:var(--text2)">Date<br><strong style="color:var(--text)">'+today+'</strong><br><span style="font-size:11px;font-family:var(--mono);color:var(--text3)">'+rcpt+'</span></div></div>'+
+    '<hr class="receipt-divider"/>'+
+    '<div style="overflow-x:auto"><table style="margin-bottom:0"><thead><tr><th>Date</th><th>Hrs</th><th>Bill</th><th>Paid</th></tr></thead><tbody>'+
+    sessions.map(function(s){return '<tr><td style="font-size:12px;font-family:var(--mono)">'+s.date+'</td><td style="font-family:var(--mono)">'+Math.round(s.hrs*10)/10+'</td><td style="font-family:var(--mono)">'+fmt(s.bill)+'</td><td style="font-family:var(--mono);color:var(--green2)">'+fmt(s.paid)+'</td></tr>';}).join('')+
+    '</tbody></table></div>'+
+    '<hr class="receipt-divider"/>'+
+    '<div class="r-row"><span style="color:var(--text2)">Total billed — કુલ બિલ</span><span style="font-family:var(--mono)">'+fmt(f.bill)+'</span></div>'+
+    '<div class="r-row"><span style="color:var(--text2)">Total paid — જમા</span><span style="font-family:var(--mono);color:var(--green2)">'+fmt(f.paid)+'</span></div>'+
+    '<div class="r-row r-total"><span>Balance — ઉધાર</span><span style="color:'+(f.balance>0?'var(--warn2)':'var(--green2)')+'">'+fmt(f.balance)+'</span></div>'+
+    '<div style="text-align:center;font-size:12px;color:var(--text2);margin-top:16px;padding-top:12px;border-top:1px dashed var(--border2)">આભાર — Thank you for your business</div>'+
+    '</div>';
+  document.getElementById('print-btn').style.display='flex';
+  toast('Receipt ready! ✓');
+}
+function printReceipt(){
+  var c=document.getElementById('receipt-print');if(!c)return;
+  var w=window.open('','_blank','width=520,height=750');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt</title><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>body{font-family:Sora,sans-serif;background:#fff;color:#111;padding:28px;max-width:480px;margin:auto}h2{font-size:16px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:7px 8px;border-bottom:1px solid #eee;text-align:left;font-family:inherit}thead th{font-size:11px;text-transform:uppercase;color:#666}.r-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;font-size:13px}.r-total{font-weight:600;font-size:15px}.mono{font-family:"JetBrains Mono",monospace}hr{border:none;border-top:1px dashed #ccc;margin:14px 0}.np{display:none}@media print{.np{display:none}}</style></head><body>'+c.outerHTML+'<br><button class="np" onclick="window.print()" style="width:100%;padding:12px;font-size:14px;cursor:pointer;margin-top:8px">Print</button><script>document.querySelector(".np").style.display="block";<\/script></body></html>');
+  w.document.close();w.focus();
+}
+function toast(msg){var t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2800);}
+
+window.showPage=showPage;
+window.openSidebar=openSidebar;
+window.closeSidebar=closeSidebar;
+
+document.querySelectorAll('.nav-item').forEach(function(item){
+  item.addEventListener('click', function(){
+    var id=this.getAttribute('data-page');
+    if(id) showPage(id,this);
+  });
+});
+
+renderDashboard();renderSessions();
+</script>
+</body>
+</html>
