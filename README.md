@@ -1,5 +1,5 @@
 # 💧 Borewell Farm Water — Business Manager
-
+Last updated: June 2025
 A free, mobile-friendly web app to manage a borewell water supply business.  
 Track sessions, farmers, payments, ledgers, and print receipts — all from your phone or PC.
 
